@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Kiss Day 💋</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body{
+  height:100vh;
+  overflow:hidden;
+  background: linear-gradient(135deg,#ff4e8a,#ff6fa5,#ffc2d1);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  position:relative;
+}
+
+/* Floating Background Glow */
+body::before{
+  content:"";
+  position:absolute;
+  width:400px;
+  height:400px;
+  background:rgba(255,255,255,0.15);
+  filter:blur(120px);
+  border-radius:50%;
+  top:10%;
+  left:20%;
+}
+
+/* Card */
+.page{
+  display:none;
+  width:90%;
+  max-width:420px;
+  padding:40px 25px;
+  text-align:center;
+  color:white;
+  backdrop-filter: blur(25px);
+  background: rgba(255,255,255,0.12);
+  border-radius:25px;
+  box-shadow:0 15px 40px rgba(0,0,0,0.25);
+  animation:fade 0.6s ease;
+  z-index:2;
+}
+
+.active{
+  display:block;
+}
+
+h1{
+  font-size:24px;
+  margin-bottom:15px;
+  letter-spacing:1px;
+}
+
+p{
+  font-size:15px;
+  line-height:1.7;
+  margin-bottom:20px;
+}
+
+button{
+  padding:10px 25px;
+  border:none;
+  border-radius:25px;
+  background:white;
+  color:#ff2f70;
+  font-weight:600;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+button:hover{
+  transform:scale(1.08);
+}
+
+/* Kiss */
+.kiss{
+  font-size:75px;
+  animation:pulse 1.2s infinite alternate;
+  cursor:pointer;
+}
+
+.from{
+  margin-top:15px;
+  font-size:14px;
+  opacity:0.9;
+}
+
+@keyframes pulse{
+  from{transform:scale(1);}
+  to{transform:scale(1.25);}
+}
+
+@keyframes fade{
+  from{opacity:0; transform:translateY(20px);}
+  to{opacity:1; transform:translateY(0);}
+}
+
+/* Floating Hearts */
+.heart{
+  position:absolute;
+  color:white;
+  animation:float 6s linear infinite;
+  opacity:0.6;
+}
+
+@keyframes float{
+  from{transform:translateY(100vh);}
+  to{transform:translateY(-10vh);}
+}
+
+/* Popup */
+.popup{
+  position:fixed;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%) scale(0);
+  background:white;
+  color:#ff2f70;
+  padding:30px;
+  border-radius:20px;
+  text-align:center;
+  box-shadow:0 15px 40px rgba(0,0,0,0.35);
+  transition:0.4s ease;
+  z-index:10;
+  width:85%;
+  max-width:350px;
+}
+
+.popup.show{
+  transform:translate(-50%,-50%) scale(1);
+}
+
+.popup h2{
+  margin-bottom:10px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- PAGE 1 -->
+<div class="page active" id="p1">
+  <h1>Happy Kiss Day 💋</h1>
+  <p>Gurleen ❤️<br>
+  Today isn’t just about kisses… it’s about the feeling behind them.</p>
+  <button onclick="next(2)">Next ➜</button>
+</div>
+
+<!-- PAGE 2 -->
+<div class="page" id="p2">
+  <h1>Your Effect On Me 🥰</h1>
+  <p>
+    The way you smile…
+    the way you look at me…
+    it does something to my heart.
+    Something soft. Something deep.
+  </p>
+  <button onclick="next(3)">Next ➜</button>
+</div>
+
+<!-- PAGE 3 -->
+<div class="page" id="p3">
+  <h1>If You Were Here 💞</h1>
+  <p>
+    If you were in front of me right now,
+    I wouldn’t rush.
+    I’d slowly come closer…
+    hold your face gently…
+    and give you the sweetest kiss
+    that makes everything else disappear.
+  </p>
+  <button onclick="next(4)">Next ➜</button>
+</div>
+
+<!-- PAGE 4 -->
+<div class="page" id="p4">
+  <h1>Close Your Eyes 💋</h1>
+  <p>
+    Imagine I’m standing right in front of you.
+    Feel my hand holding yours.
+    Now slowly lean towards the screen…
+    and tap the kiss.
+  </p>
+  <div class="kiss" onclick="showPopup()">💋</div>
+  <div class="from">Only yours, Gurnaj ❤️</div>
+</div>
+
+<!-- POPUP -->
+<div class="popup" id="popup">
+  <h2>That Felt Real… 😘</h2>
+  <p>
+    Gurleen… I swear I felt that.
+    My heart is racing.
+    One day it won’t be virtual.
+    And when that day comes,
+    I’m not letting you go.
+  </p>
+  <button onclick="closePopup()">Blushing 🙈</button>
+</div>
+
+<script>
+function next(n){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('p'+n).classList.add('active');
+}
+
+function showPopup(){
+  document.getElementById("popup").classList.add("show");
+  heartBurst();
+}
+
+function closePopup(){
+  document.getElementById("popup").classList.remove("show");
+}
+
+/* Floating hearts */
+setInterval(()=>{
+  const heart=document.createElement("div");
+  heart.classList.add("heart");
+  heart.innerHTML="❤";
+  heart.style.left=Math.random()*100+"vw";
+  heart.style.fontSize=(Math.random()*20+15)+"px";
+  heart.style.animationDuration=(Math.random()*3+3)+"s";
+  document.body.appendChild(heart);
+  setTimeout(()=>heart.remove(),6000);
+},400);
+
+/* Heart burst effect */
+function heartBurst(){
+  for(let i=0;i<15;i++){
+    const heart=document.createElement("div");
+    heart.innerHTML="💖";
+    heart.style.position="absolute";
+    heart.style.left="50%";
+    heart.style.top="50%";
+    heart.style.fontSize="20px";
+    heart.style.transform=`translate(-50%,-50%) rotate(${Math.random()*360}deg)`;
+    heart.style.transition="all 1s ease-out";
+    document.body.appendChild(heart);
+
+    setTimeout(()=>{
+      heart.style.left=(50+Math.random()*40-20)+"%";
+      heart.style.top=(50+Math.random()*40-20)+"%";
+      heart.style.opacity="0";
+    },50);
+
+    setTimeout(()=>heart.remove(),1000);
+  }
+}
+</script>
+
+</body>
+</html>
